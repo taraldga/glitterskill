@@ -12,17 +12,19 @@ def index():
 def data():
   data = {
     "job" : {
-      "id": 123452,
+      "adid": 123452,
       "title": "Software Developer",
       "firm": "Bekk Consulting",
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit natus quo facere reprehenderit ullam ratione, beatae, repudiandae iure totam exercitationem nihil voluptas neque, illo aliquam quasi distinctio fuga consequuntur saepe!",
-      "type": "partime",
-      "industry": "IT",
+      "duration": "partime",
+      "NOPosition": 5,
+      "jobFunction": "IT",
       "location": "Russia",
       "contact": "martin@finn.no",
       "deadline": "01.03.16",
-      "date": "01.06.16",
-      "background": "engineer"
+      "dateRelease": "01.06.16",
+      "background": "engineer",
+      "skills": "Good programmer"
     }
   }
   return jsonify(data)
