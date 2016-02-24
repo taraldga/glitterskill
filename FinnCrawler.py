@@ -9,13 +9,13 @@ import codecs
 
 
 # ID BIGINT()
-# Firm VARCHAR(100),
-# Place VARCHAR(300),
+# Firm VARCHAR(100), KK
+# Place VARCHAR(300),KK
 # Deadline VARCHAR(10),
 # Duration VARCHAR(50),
 # NOPosition VARCHAR(5),
-# Title VARCHAR(100), (done)
-# Industry VARCHAR(100),
+# Title VARCHAR(100), (B)
+# Industry VARCHAR(100),(B)
 # JobFunction VARCHAR(100)
 # RawText VARCHAR(UNDEFINED) (done)
 
@@ -52,9 +52,20 @@ def fetch_contents(url):
 
     job_title = parser.findAll("h1", {"class": ["h1", "word-break", "mbn"]})
 
-    job_location = parser.findAll("dl", {"class": ["r-prl", "mhn", "multicol"]})
+    boxes = parser.findAll("dl", {"class": ["r-prl", "mhn", "multicol"]})
+    dicctionary = {}
+    for box in boxes:
+        keys = box.findAll('dt')
+        values = box.findAll('dd')
+        for i in range(len(keys)):
+            dicctionary[keys[i].text] = values[i].text
 
-    print job_location
+    # for element in job_location:
+    #     print element.text
+
+
+
+    # print job_location
 
     with open(os.path.join("ads", "ad-contents", "content_{}.txt".format(unique_id)), "w") as content_file:
         content_file.write(job_description)
