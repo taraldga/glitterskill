@@ -7,6 +7,18 @@ import os
 import numpy as np
 import codecs
 
+
+# ID BIGINT()
+# Firm VARCHAR(100),
+# Place VARCHAR(300),
+# Deadline VARCHAR(10),
+# Duration VARCHAR(50),
+# NOPosition VARCHAR(5),
+# Title VARCHAR(100), (done)
+# Industry VARCHAR(100),
+# JobFunction VARCHAR(100)
+# RawText VARCHAR(UNDEFINED) (done)
+
 def fetch_ad_urls():
     result = json.loads(urllib2.urlopen("http://m.finn.no/job/fulltime/search.json?occupation=0.23").read().decode("utf-8"))
     ad_urls = ["http://m.finn.no{}".format(ad["adUrl"]) for ad in result["displaySearchResults"] if "adUrl" in ad]
@@ -31,48 +43,39 @@ def fetch_ad_contents():
 def fetch_contents(url):
     source = urllib2.urlopen(url).read().decode("utf-8")
     parser = BeautifulSoup(source, "html.parser")
-    #print(source,url)
     job_description = "\n".join([re.sub("<.+?>", " ", str(element)) for element in parser.findAll("div", {"class": ["object-description", "mbl"]})])
-    print(job_description)
     job_description = re.sub("\s[^a-zA-Z������]\s", " ", job_description)
     job_description = re.sub(r"([a-zA-Z������-]+)[\.,]\s", r"\1", job_description)
     job_description = re.sub("\s+", " ", job_description)
+
     unique_id = re.search(".+?=([0-9]+)", url).group(1)
-    
+
     job_title = parser.findAll("h1", {"class": ["h1", "word-break", "mbn"]})
-    
-    print(job_title)
+
+    job_location = parser.findAll("dl", {"class": ["r-prl", "mhn", "multicol"]})
+
+    print job_location
 
     with open(os.path.join("ads", "ad-contents", "content_{}.txt".format(unique_id)), "w") as content_file:
         content_file.write(job_description)
 
-#def leik():
-#    files = [os.path.join("ads", "ad-contents", "{}".format(filename)) for filename in os.listdir(os.path.join("ads", "ad-contents"))]
-#    with open(files[0]) as f1, open(files[1]) as f2:
-#        set1 = set(f1.read().split())
-#        set2 = set(f2.read().split())
-#        set1 = set1.difference(set2)
-#        for filename in files[2:]:
-#            with open(filename) as f3:
-#                set1 = set1.difference(set(f3.read().split()))
-#        print(set1)
 
 def setup():
-    os.chdir(os.path.dirname(__file__))
-    if not os.path.exists(os.path.join("ads", "ad-contents")):
-        os.makedirs(os.path.join("ads", "ad-contents"))
+    # os.chdir(os.path.dirname(__file__))
+    # if not os.path.exists(os.path.join("ads", "ad-contents")):
+    #     os.makedirs(os.path.join("ads", "ad-contents"))
     print("--- Initial setup complete ---")
-    
+
 #def heisann():
 #    os.chdir(os.path.join(os.path.dirname(__file__), "ads", "ad-contents"))
 #    print(os.getcwd())
 #    hei = np.loadtxt("content_71333019.txt", dtype=str, comments='#', delimiter=' ')
-    # problem med ���, �=?, �=\xc3\xb8, �=\xc2\xb0 
+    # problem med ���, �=?, �=\xc3\xb8, �=\xc2\xb0
     # Vil egentlig ha en string og ikkje et numpyarray
     # https://docs.python.org/dev/library/stdtypes.html#str se 4.7.1 og nedover
 #    print(hei)
 #    print("tipp topp")
-    
+
     #condition = hei == "nok"
     #sveis = np.extract(condition, hei)
     #print(sveis)
