@@ -3,14 +3,14 @@ jQuery("#top-five").click(function(e){
 //do something
     if($("#topfive").is(':hidden')){
         $('#topfive').show();
-        $('#heatmap').hide();
+        $('#map-container').hide();
         $('#wordcloud').hide();
     }
     e.preventDefault();
 });
 jQuery("#heat-map").click(function(e){
-    if($("#heatmap").is(':hidden')){
-        $('#heatmap').show();
+    if($("#map-container").is(':hidden')){
+        $('#map-container').show();
         $('#topfive').hide();
         $('#wordcloud').hide();
     }
@@ -19,11 +19,12 @@ jQuery("#heat-map").click(function(e){
 jQuery("#word-cloud").click(function(e){
     if($("#wordcloud").is(':hidden')){
         $('#wordcloud').show();
-        $('#heatmap').hide();
+        $('#map-container').hide();
         $('#topfive').hide();
     }
     e.preventDefault();
 });
+
 
 var data;
 $.ajax({

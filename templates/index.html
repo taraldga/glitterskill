@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"   crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="static/css/mystyle.css">
   </head>
+
   <body id="body">
  <!-- sidebar -->
     <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
@@ -47,7 +48,7 @@
         <!-- dynamic part start-->
       <div class="row top-buffer">
         <!-- /TOP FIVE ATTRIBUTES -->
-        <div id=topfive>  
+        <div id=topfive style="display: none">  
           <div class="Headline">
             <h1>
               <center>Top five most attractive skills</center>
@@ -66,10 +67,10 @@
         <!-- /TOP FIVE ATTRIBUTES -->
 
         <!-- /Heatmap -->   
-        <div id=heatmap style="display: none">
-          <h1>here is some text</h1>
-        </div>
-        <!-- /Heatmap --> 
+    <div id="map-container";>
+      <img src="static/img/norwaymap.jpg" class="img-responsive"> 
+    </div>
+    <!-- /Heatmap --> 
 
         <!-- /WordCloud -->
         <div id=wordcloud style="display: none">
@@ -80,6 +81,8 @@
 
       </div>
       <!-- dynamic part end-->
+
+
 
 
      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

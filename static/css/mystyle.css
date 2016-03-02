@@ -25,6 +25,12 @@ a:hover {
 hr {
   border-color:#dedede;
 }
+#map-container{
+  position: relative;
+  display:inline-block;
+  text-align:center;
+  border:1 solid red;
+}
 
 .wrapper, .row {
    height: 100%;
@@ -55,6 +61,13 @@ hr {
 
 .full{
   padding-top:70px;
+}
+.button{
+  position:absolute;
+  bottom:10px;
+  right:10px;
+  width:100px;
+  height:30px;
 }
 
 .box {
