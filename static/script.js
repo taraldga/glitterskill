@@ -3,14 +3,14 @@ jQuery("#top-five").click(function(e){
 //do something
     if($("#topfive").is(':hidden')){
         $('#topfive').show();
-        $('#map-container').hide();
+        $('#map').hide();
         $('#wordcloud').hide();
     }
     e.preventDefault();
 });
 jQuery("#heat-map").click(function(e){
-    if($("#map-container").is(':hidden')){
-        $('#map-container').show();
+    if($("#map").is(':hidden')){
+        $('#map').show();
         $('#topfive').hide();
         $('#wordcloud').hide();
     }
@@ -19,7 +19,7 @@ jQuery("#heat-map").click(function(e){
 jQuery("#word-cloud").click(function(e){
     if($("#wordcloud").is(':hidden')){
         $('#wordcloud').show();
-        $('#map-container').hide();
+        $('#map').hide();
         $('#topfive').hide();
     }
     e.preventDefault();
@@ -44,9 +44,6 @@ $.ajax({
         $('.description').append(job.description);
         $('.skills').append(job.skills);
         $('.location').append(job.location);
-     },
-     error:function(){
-         alert("Error");
      }
 });
 
