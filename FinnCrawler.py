@@ -6,18 +6,8 @@ import re
 import os
 import numpy as np
 import codecs
+import sqlite3
 
-
-# ID BIGINT()
-# Firm VARCHAR(100), KK
-# Place VARCHAR(300),KK
-# Deadline VARCHAR(10),
-# Duration VARCHAR(50),
-# NOPosition VARCHAR(5),
-# Title VARCHAR(100), (B)
-# Industry VARCHAR(100),(B)
-# JobFunction VARCHAR(100)
-# RawText VARCHAR(UNDEFINED) (done)
 
 def fetch_ad_urls():
     result = json.loads(urllib2.urlopen("http://m.finn.no/job/fulltime/search.json?occupation=0.23").read().decode("utf-8"))
@@ -31,69 +21,94 @@ def fetch_ad_urls():
     print("--- Fetched URL's ---")
 
 def fetch_ad_contents():
+    conn = sqlite3.connect('database.db')
+    conn.text_factory = str
+    cursor = conn.cursor()
+
     with open(os.path.join("ads", "ad_urls")) as url_file:
         n_urls = int(url_file.readline().strip())
         for i, line in enumerate(url_file):
             url = line.strip()
             print("Processing, {} of {}".format(i+1, n_urls))
-            fetch_contents(url)
-            break #For testing, kjører kun gjennom en annonse
+            #simple = 72308893
+            #omplicqted = 72308957
+            #url = "http://m.finn.no/job/fulltime/ad.html?finnkode=72308957"
+            fetch_contents(url, cursor)
+            #break #For testing, kjører kun gjennom en annonse
     print("--- Fetched ad contents ---")
+    conn.commit()
+    conn.close()
 
-def fetch_contents(url):
+def fetch_contents(url, cursor):
     source = urllib2.urlopen(url).read().decode("utf-8")
     parser = BeautifulSoup(source, "html.parser")
-    job_description = "\n".join([re.sub("<.+?>", " ", str(element)) for element in parser.findAll("div", {"class": ["object-description", "mbl"]})])
-    job_description = re.sub("\s[^a-zA-Z������]\s", " ", job_description)
-    job_description = re.sub(r"([a-zA-Z������-]+)[\.,]\s", r"\1", job_description)
-    job_description = re.sub("\s+", " ", job_description)
 
-    unique_id = re.search(".+?=([0-9]+)", url).group(1)
+    #text purification
+    # job_description = re.sub("\s[^a-zA-Z������]\s", " ", job_description)
+    # job_description = re.sub(r"([a-zA-Z������-]+)[\.,]\s", r"\1", job_description)
+    # job_description = re.sub("\s+", " ", job_description)
 
-    job_title = parser.findAll("h1", {"class": ["h1", "word-break", "mbn"]})
-
-    boxes = parser.findAll("dl", {"class": ["r-prl", "mhn", "multicol"]})
-    dicctionary = {}
-    for box in boxes:
-        keys = box.findAll('dt')
-        values = box.findAll('dd')
+    tables = parser.findAll("dl", {"class": ["r-prl", "mhn", "multicol"]})
+    job_obj = {}
+    for table in tables:
+        keys = table.findAll('dt')
+        values = table.findAll('dd')
+        place = False
         for i in range(len(keys)):
-            dicctionary[keys[i].text] = values[i].text
+            job_obj[keys[i].text] = values[i].text
 
-    # for element in job_location:
-    #     print element.text
+            if place:
+                if keys[i].text == "Frist":
+                    place = False
+                else:
+                    if keys[i].text == "":
+                        job_obj['Sted'] = values[i].text
+
+            if keys[i].text == "Sted":
+                place = True
+
+    id = unique_id = re.search(".+?=([0-9]+)", url).group(1)
+
+    job_obj['id'] = id
+    description = "\n".join([re.sub("<.+?>", " ", str(element)) for element in parser.findAll("div", {"class": ["object-description", "mbl"]})])
+
+    firm = None
+    if 'Arbeidsgiver' in job_obj:
+        firm = job_obj['Arbeidsgiver']
+
+    city = None
+    if 'Sted' in job_obj:
+        location = job_obj['Sted'].split(" ")
+        postcode = location[0].rstrip()
+        city = location[1].rstrip()
+
+    deadline = None
+    if 'Frist' in job_obj:
+        deadline = job_obj['Frist'].rstrip().strip()
+
+    title = job_obj['Stillingstittel'].rstrip()
+    branch = "it"
+    source = "finn"
+
+    job_query = 'INSERT INTO  job(id, title, description, firm, city, postcode, branch, deadline, source)' + 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);'
+    params = (id, title, description, firm, city, postcode, branch, deadline, source)
+
+    cursor.execute(job_query, params)
 
 
 
-    # print job_location
 
-    with open(os.path.join("ads", "ad-contents", "content_{}.txt".format(unique_id)), "w") as content_file:
-        content_file.write(job_description)
 
 
 def setup():
-    # os.chdir(os.path.dirname(__file__))
-    # if not os.path.exists(os.path.join("ads", "ad-contents")):
-    #     os.makedirs(os.path.join("ads", "ad-contents"))
+    os.chdir(os.path.dirname(__file__))
+    if not os.path.exists(os.path.join("ads", "ad-contents")):
+        os.makedirs(os.path.join("ads", "ad-contents"))
     print("--- Initial setup complete ---")
 
-#def heisann():
-#    os.chdir(os.path.join(os.path.dirname(__file__), "ads", "ad-contents"))
-#    print(os.getcwd())
-#    hei = np.loadtxt("content_71333019.txt", dtype=str, comments='#', delimiter=' ')
-    # problem med ���, �=?, �=\xc3\xb8, �=\xc2\xb0
-    # Vil egentlig ha en string og ikkje et numpyarray
-    # https://docs.python.org/dev/library/stdtypes.html#str se 4.7.1 og nedover
-#    print(hei)
-#    print("tipp topp")
-
-    #condition = hei == "nok"
-    #sveis = np.extract(condition, hei)
-    #print(sveis)
-    #print("lollipop")
 
 
 if __name__ == "__main__":
-    setup()
+    #setup()
     fetch_ad_urls()
     fetch_ad_contents()
