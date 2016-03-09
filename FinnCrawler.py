@@ -42,7 +42,6 @@ def fetch_ad_contents():
 def fetch_contents(url, cursor):
     source = urllib2.urlopen(url).read().decode("utf-8")
     parser = BeautifulSoup(source, "html.parser")
-
     #text purification
     # job_description = re.sub("\s[^a-zA-Z������]\s", " ", job_description)
     # job_description = re.sub(r"([a-zA-Z������-]+)[\.,]\s", r"\1", job_description)
@@ -63,6 +62,7 @@ def fetch_contents(url, cursor):
                 else:
                     if keys[i].text == "":
                         job_obj['Sted'] = values[i].text
+
 
             if keys[i].text == "Sted":
                 place = True
@@ -101,7 +101,7 @@ def fetch_contents(url, cursor):
 
 
 def setup():
-    os.chdir(os.path.dirname(__file__))
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     if not os.path.exists(os.path.join("ads", "ad-contents")):
         os.makedirs(os.path.join("ads", "ad-contents"))
     print("--- Initial setup complete ---")
