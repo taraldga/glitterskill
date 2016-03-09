@@ -37,18 +37,19 @@ def fetch_ad_contents():
             url = line.strip()
             print("Processing, {} of {}".format(i+1, n_urls))
             fetch_contents(url)
-            break #For testing, kjører kun gjennom en annonse
+            #break #For testing, kjører kun gjennom en annonse
     print("--- Fetched ad contents ---")
 
 def fetch_contents(url):
     source = urllib2.urlopen(url).read().decode("utf-8")
     parser = BeautifulSoup(source, "html.parser")
     job_description = "\n".join([re.sub("<.+?>", " ", str(element)) for element in parser.findAll("div", {"class": ["object-description", "mbl"]})])
-    job_description = re.sub("\s[^a-zA-Z������]\s", " ", job_description)
-    job_description = re.sub(r"([a-zA-Z������-]+)[\.,]\s", r"\1", job_description)
+    job_description = re.sub("\s[^a-zA-ZæøåÆØÅ]\s", " ", job_description)
+    job_description = re.sub(r"([a-zA-ZæøåÆØÅ-]+)[\.,]\s", r"\1 ", job_description)
     job_description = re.sub("\s+", " ", job_description)
 
     unique_id = re.search(".+?=([0-9]+)", url).group(1)
+    print(unique_id)
 
     job_title = parser.findAll("h1", {"class": ["h1", "word-break", "mbn"]})
 
@@ -72,9 +73,9 @@ def fetch_contents(url):
 
 
 def setup():
-    # os.chdir(os.path.dirname(__file__))
-    # if not os.path.exists(os.path.join("ads", "ad-contents")):
-    #     os.makedirs(os.path.join("ads", "ad-contents"))
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    if not os.path.exists(os.path.join("ads", "ad-contents")):
+        os.makedirs(os.path.join("ads", "ad-contents"))
     print("--- Initial setup complete ---")
 
 #def heisann():
