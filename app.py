@@ -1,32 +1,25 @@
 from flask import Flask, render_template, jsonify
+import sqlite3
+
 app = Flask(__name__)
 
 #This is an early version of the backend powering glitterskill
 
 @app.route("/")
 def index():
-  return render_template('index.html')
+  data = ["Javascript", "Meteor", "Python", "Ruby On Rails", "Java"];
+  return render_template('barebones.html', data=data)
 
-
-@app.route("/data")
-def data():
-  data = {
-    "job" : {
-      "id": 123452,
-      "title": "Software Developer",
-      "firm": "Bekk Consulting",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit natus quo facere reprehenderit ullam ratione, beatae, repudiandae iure totam exercitationem nihil voluptas neque, illo aliquam quasi distinctio fuga consequuntur saepe!",
-      "type": "partime",
-      "industry": "IT",
-      "location": "Russia",
-      "contact": "martin@finn.no",
-      "deadline": "01.03.16",
-      "date": "01.06.16",
-      "background": "engineer"
-    }
-  }
-  return jsonify(data)
-
+def query_db(query, args=(), one=False):
+  print 'running query'
+  db = sqlite3.connect('database.db')
+  cur = db.cursor()
+  cur.execute(query, args)
+  r = [dict((cur.description[i][0], value) \
+             for i, value in enumerate(row)) for row in cur.fetchall()]
+  cur.connection.close()
+  db.close()
+  return (r[0] if r else None) if one else r
 
 if __name__ == "__main__":
   app.run(debug=True)

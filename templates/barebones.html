@@ -1,8 +1,57 @@
 <html>
   <head>
+    <link rel="stylesheet" href="static/assets/css/normalize.css" />
+    <link rel="stylesheet" href="static/assets/css/skeleton.css" />
+    <link rel="stylesheet" href="static/assets/css/simple.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
   </head>
   <body>
+    <div class="container">
+      <div class="row">
+        <div class="twelve columns">
+          <div class="navbar">
+            <i class="fa fa-star"></i> Gliterskill
+            <span> - know your industry's skills </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          <div class="content" id="main">
+            <div class="container">
+              <div class="row">
+                <div class="four columns">
+                  <div class="block" id="top-list">
+                    <div class="list" >
+                      <h2>Top Skills March</h2>
+                      <ul>
+                        {% for word in data %}
+                          <li>{{ word }}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="six columns">
+                   <div class="block" id="stats">
+                   </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="map"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://use.typekit.net/nlt0wxh.js"></script>
+    <script src="static/assets/js/jquery.min.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+
+    <script src="static/assets/js/script.js"></script>
+
 
   </body>
 </html>
