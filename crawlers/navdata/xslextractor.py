@@ -19,7 +19,7 @@ def make_date(date):
 		return date
 
 def traverse_notebook(path):
-	conn = sqlite3.connect('database.db')
+	conn = sqlite3.connect('../../database.db')
 	conn.text_factory = str
 	cursor = conn.cursor()
 
@@ -36,16 +36,12 @@ def traverse_notebook(path):
 		region = sheet.cell_value(row,15)[3:]
 		date = make_date(sheet.cell_value(row,2))
 		source = "nav"
-
-		print id
-
 		if (branch == 'Ingeniør- og ikt-fag'.decode("utf-8")) and ('utvikler' in description):
 			job_query = 'INSERT INTO  job(id, title, description, region, branch, source, date)' + 'VALUES (?, ?, ?, ?, ?, ?, ?);'
 			params = (id, title, description, region, branch, source, date)
-			#cursor.execute(job_query, params)
-
-  # conn.commit()
-  # conn.close()
+			cursor.execute(job_query, params)
+	conn.commit()
+	conn.close()
 
 
 def main():
