@@ -7,6 +7,7 @@ import os
 import numpy as np
 import codecs
 import sqlite3
+import datetime
 
 
 def fetch_ad_urls():
@@ -55,15 +56,12 @@ def fetch_contents(url, cursor):
         place = False
         for i in range(len(keys)):
             job_obj[keys[i].text] = values[i].text
-
             if place:
                 if keys[i].text == "Frist":
                     place = False
                 else:
                     if keys[i].text == "":
                         job_obj['Sted'] = values[i].text
-
-
             if keys[i].text == "Sted":
                 place = True
 
@@ -90,14 +88,12 @@ def fetch_contents(url, cursor):
     branch = "it"
     source = "finn"
 
-    job_query = 'INSERT INTO  job(id, title, description, firm, city, postcode, branch, deadline, source)' + 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);'
-    params = (id, title, description, firm, city, postcode, branch, deadline, source)
+    date = datetime.datetime.now().isoformat()
+
+    job_query = 'INSERT INTO  job(id, title, description, firm, city, postcode, branch, deadline, source, date)' + 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);'
+    params = (id, title, description, firm, city, postcode, branch, deadline, source, date)
 
     cursor.execute(job_query, params)
-
-
-
-
 
 
 def setup():

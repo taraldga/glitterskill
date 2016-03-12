@@ -6,19 +6,19 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-def fileread(fname): 
+def fileread(fname):
     script_dir = os.path.dirname(__file__)
     with open (os.path.join(script_dir,"ads", "ad-contents", fname)) as myfile:
         data=myfile.read()
     return data
-   
+
 #path = 'ads\ad-contents'
 #for filename in os.listdir(path):
 #x = os.listdir(path)
 #print x
 
 def dirListing():
-    dirList = os.listdir(r"C:\Users\BeateHaram\Documents\Eit\glitterskill\ads\ad-contents")
+    dirList = os.listdir("./ads/ad-contents")
     alldata = ''
     for fname in dirList:
         #print fname
@@ -40,8 +40,8 @@ def kjellspyton(x,y):
     #f.write(str(collections.Counter(words).most_common(40)))
     #print str(collections.Counter(words).most_common(40))
     #f.close()
-    #return 
-    
+    #return
+
 
 
 def main():
