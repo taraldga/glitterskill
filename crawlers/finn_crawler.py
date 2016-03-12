@@ -87,7 +87,6 @@ def fetch_contents(url, cursor):
     title = job_obj['Stillingstittel'].rstrip()
     branch = "it"
     source = "finn"
-
     date = datetime.datetime.now().isoformat()
 
     job_query = 'INSERT INTO  job(id, title, description, firm, city, postcode, branch, deadline, source, date)' + 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);'

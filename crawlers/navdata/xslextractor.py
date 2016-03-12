@@ -17,19 +17,18 @@ def make_date(date):
 		return date
 
 def traverse_notebook(path):
-	print "sdasdsadsa asdsad asd as dsa "
 	workbook = xlrd.open_workbook(path)
 	sheet = workbook.sheet_by_index(0)
 	n = sheet.ncols
 	for row in range(sheet.nrows-10000):
-		ID = sheet.cell_value(row,1)
-		ISCO = sheet.cell_value(row,9)
-		beskrivelse = clean_tags(sheet.cell_value(row,6))
-		beskrivelse2 = sheet.cell_value(row,7)
-		beskrivelse2 = clean_tags(beskrivelse2)
-		Arbeidssted = sheet.cell_value(row,11)
+		id = sheet.cell_value(row,1)
+		isco = sheet.cell_value(row,9)
+		description = clean_tags(sheet.cell_value(row,6))
+		description2 = clean_tags(sheet.cell_value(row,7))
+		branch = sheet.cell_value(row,11)
+		region = sheet.cell_value(row,15)[3:]
 		date = make_date(sheet.cell_value(row,2))
-		print date
+		source = "nav"
 
 def main():
 	traverse_notebook('LS.xlsx')  #Edit this line to match the path of the workbook.
