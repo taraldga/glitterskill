@@ -3,25 +3,67 @@ body {
 }
 
 .container {
-  width: 95%;
+  width: 100%;
   max-width: none;
 }
 
-#main {
-  padding: 28px 0;
-}
-
 .navbar {
-  padding: 12px 0;
+  padding: 8px 20px;
   font-size: 24px;
+  // background-color: #DF383D;
+  background-color: #312450;
+  color: white;
+  position: relative;
   span {
     font-size: 16px;
+  }
+  .nav-buttons {
+    position: absolute;
+    right: 10px;
+    top: 3px;
+    .button {
+      // background-color: #c53939;
+      background-color: #4C4EAD;
+      border: white;
+      color: white;
+    }
+  }
+}
+
+#map {
+  width: 100%;
+  min-height: 300px;
+}
+
+.sidebar-wrapper {
+  width: 34.6666666667%!important;
+  margin-left: 0;
+  .sidebar {
+    background-color: #F2F7F8;
+    padding: 20px 20px;
+    .buttons {
+      text-align: center;
+      button {
+        background-color: #4C4EAD;
+        color: white;
+      }
+    }
+    .info {
+      padding-top: 30px;
+      span {
+        &#county {
+          font-size: 28px;
+        }
+        &#countyId {
+          font-size: 18px;
+        }
+      }
+    }
   }
 }
 
 .content {
   background-color: #323538;
-  height: 900px;
   width: 100%;
   svg {
     margin: 0 auto;
@@ -29,27 +71,5 @@ body {
   }
 }
 
-.block {
-  height: 250px;
-  padding: 20px;
-  h2 {
-    font-size: 20px;
-  }
-  &#top-list {
-    background-color: #CF4140;
-  }
-  &#stats {
-  }
-}
-
-#top-list {
-  .list {
-    ul {
-      li {
-        list-style-type: none;
-      }
-    }
-  }
-}
 
 

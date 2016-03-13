@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="static/assets/css/skeleton.css" />
     <link rel="stylesheet" href="static/assets/css/simple.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/assets/css/leaflet.css" />
+
 
   </head>
   <body>
@@ -11,36 +13,39 @@
       <div class="row">
         <div class="twelve columns">
           <div class="navbar">
-            <i class="fa fa-star"></i> Gliterskill
-            <span> - know your industry's skills </span>
+            <div class="brand">
+              <i class="fa fa-star"></i> Gliterskill
+              <span> - know your industry's skills </span>
+            </div>
+            <div class="nav-buttons">
+              <a class="button" href="#">Mapz & Top 5 Attributes</a>
+              <a class="button" href="{{ url_for('wordcloud') }}">Wordcloud</a>
+              <a class="button" href="{{ url_for('toplist') }}">Top List</a>
+              <button class="button-primary">Where to work</button>
+            </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="twelve columns">
+        <div class="eight columns">
           <div class="content" id="main">
-            <div class="container">
-              <div class="row">
-                <div class="four columns">
-                  <div class="block" id="top-list">
-                    <div class="list" >
-                      <h2>Top Skills March</h2>
-                      <ul>
-                        {% for word in data %}
-                          <li>{{ word }}</li>
-                        {% endfor %}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="six columns">
-                   <div class="block" id="stats">
-                   </div>
-                </div>
-              </div>
-            </div>
 
             <div id="map"></div>
+          </div>
+        </div>
+        <div class="four columns sidebar-wrapper">
+          <div class="sidebar">
+            <div class="buttons">
+              <button class="button-primary">Button element</button>
+              <button >Button element</button>
+            </div>
+            <div class="info">
+              <span>Displaying info on:</span>
+              <div>
+                <span id="county">Please select a county</span> <span id="countyId"></span>
+                <div class="bubbles"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -49,6 +54,7 @@
     <script src="static/assets/js/jquery.min.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 
     <script src="static/assets/js/script.js"></script>
 
