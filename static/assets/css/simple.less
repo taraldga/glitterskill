@@ -1,3 +1,8 @@
+html, body {
+  overflow: hidden;
+  height: 100%;
+}
+
 body {
   font-family: "futura-pt",sans-serif;
 }
@@ -10,8 +15,8 @@ body {
 .navbar {
   padding: 8px 20px;
   font-size: 24px;
-  // background-color: #DF383D;
-  background-color: #312450;
+  background-color: #DF383D;
+  //background-color: #312450;
   color: white;
   position: relative;
   span {
@@ -22,8 +27,8 @@ body {
     right: 10px;
     top: 3px;
     .button {
-      // background-color: #c53939;
-      background-color: #4C4EAD;
+      background-color: #c53939;
+      //background-color: #4C4EAD;
       border: white;
       color: white;
     }
@@ -44,7 +49,8 @@ body {
     .buttons {
       text-align: center;
       button {
-        background-color: #4C4EAD;
+        //background-color: #4C4EAD;
+        background-color: #c53939;
         color: white;
       }
     }
@@ -71,5 +77,40 @@ body {
   }
 }
 
+.hidden {
+  display: none;
+}
+div.tooltip {
+  color: #222;
+  background-color: #fff;
+  padding: .5em;
+  text-shadow: #f5f5f5 0 1px 0;
+  border-radius: 2px;
+  position: absolute;
+  top: 65px;
+  left: 48px;
+  padding: 14px;
+  opacity: 0.8;
+}
 
+.footer {
+  height: 40px;
+  background-color: #DF383D;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  color: white;
+  .info {
+    padding: 10px 30px;
+    img {
+      height: 70%;
+      width: auto;
+    }
+  }
+}
+
+
+.leaflet-container {
+    background: black;
+}
 
