@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route("/")
 def index():
   data = ["Javascript", "Meteor", "Python", "Ruby On Rails", "Java"];
-  return render_template('barebones.html', data=data)
+  return render_template('index.html', data=data)
 
 def query_db(query, args=(), one=False):
   print 'running query'
@@ -21,30 +21,18 @@ def query_db(query, args=(), one=False):
   db.close()
   return (r[0] if r else None) if one else r
 
-@app.route('/wordcloud', methods=['GET', 'POST'])
+@app.route('/rihanna')
+def rihanna():
+  return render_template('barebones.html')
+
+@app.route('/wordcloud')
 def wordcloud():
-    if request.method == 'POST':
-        # do stuff when the form is submitted
+  return render_template('wordcloud.html')
 
-        # redirect to end the POST handling
-        # the redirect can be to the same route or somewhere else
-        return redirect(url_for('index'))
-
-    # show the form, it wasn't submitted
-    return render_template('wordcloud.html')
-
-@app.route('/toplist', methods=['GET', 'POST'])
+@app.route('/toplist')
 def toplist():
-    if request.method == 'POST':
-        # do stuff when the form is submitted
-
-        # redirect to end the POST handling
-        # the redirect can be to the same route or somewhere else
-        return redirect(url_for('index'))
-
-    # show the form, it wasn't submitted
-    return render_template('toplist.html')
+  return render_template('toplist.html')
 
 
 if __name__ == "__main__":
-  app.run(debug=True, port=3000)
+  app.run(debug=True, port=4000)

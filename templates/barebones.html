@@ -5,8 +5,6 @@
     <link rel="stylesheet" href="static/assets/css/simple.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="static/assets/css/leaflet.css" />
-
-
   </head>
   <body>
     <div class="container">
@@ -44,6 +42,7 @@
               <div>
                 <span id="county">Please select a county</span> <span id="countyId"></span>
                 <div class="bubbles"></div>
+                <div class="wordcloud"></div>
               </div>
             </div>
           </div>
@@ -55,9 +54,16 @@
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-
+    <script src="static/assets/js/d3.layout.cloud.js"></script>
+    <script src="static/assets/js/bubbles.js"></script>
+    <script src="static/assets/js/wordcloud.js"></script>
     <script src="static/assets/js/script.js"></script>
-
+  <script>
+  window.intercomSettings = {
+    app_id: "qoywoufr"
+  };
+</script>
+<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/qoywoufr';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
 
   </body>
 </html>
