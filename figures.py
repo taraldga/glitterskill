@@ -5,20 +5,18 @@ import collections
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+#from tempfile import TemporaryFile #for å bruke tempfile til å lagre variabel
+import pickle
 
 def fileread(fname): 
     script_dir = os.path.dirname(__file__)
     with open (os.path.join(script_dir,"ads", "ad-contents", fname)) as myfile:
         data=myfile.read()
     return data
-   
-#path = 'ads\ad-contents'
-#for filename in os.listdir(path):
-#x = os.listdir(path)
-#print x
+    
 
-def dirListing():
-    dirList = os.listdir(r"C:\Users\BeateHaram\Documents\Eit\glitterskill\ads\ad-contents")
+def dirListing(fileplacement):
+    dirList = os.listdir(fileplacement)
     alldata = ''
     for fname in dirList:
         #print fname
@@ -26,6 +24,7 @@ def dirListing():
         #print data
         alldata = alldata + data
     return alldata
+
 
 def kjellspyton(x,y):
     #Rawdata = 'Unit4 AS0401 OSLO Unit4 er en ledende leverandør av forretningssystemer til tjenesteytende virksomheter og offentlig sektor. Vi leverer ERP, bransjespesifikke forretningsløsninger og applikasjoner. Tusenvis av tjenesteytende virksomheter innen konsulent, utdanning, offentlige tjenester, organisasjonslivet, media, eiendom, engros, bank og finans bruker i dag løsninger fra Unit4. Konsernet har en årlig omsetning på over 500 mill euro og mer enn 4000 ansatte på verdensbasis. Unit4  in business for people.JuniorkonsulenterJuniorkonsulenter NORDISK OPPLÆRINGSPROGRAM Unit4 (Unit4 Business World)Vi styrker konsulentavdelingen i Norden, og her i Norge skal vi ansette 2 kandidater som vil inngå i et nordisk opplæringsprogram. Du vil bli en del av teamet i den norske konsulentavdelingen som utfører rådgivning og implementering relatert til produktene i Unit4 sin portefølje.Konsulentavdelingen tilbyr et bredt spekter av konsulenttjenester relatert til Unit4 Business World (AGRESSO) og andre løsninger i Unit4 sin portefølje. Kundene er store og mellomstore bedrifter og prosjektene er utfordrende, med stor variasjon i kompleksitet og størrelse. Våre oppdrag utføres i henhold til vår standard metodikk for prosjektgjennomføring. Noen av prosjektene gjennomføres helt eller delvis i utlandet.ArbeidsområderHovedområdet ditt vil bli å implementere UBW (AGRESSO) hos våre kunder, sammen med våre seniorkonsulenter. Du vil jobbe tett med en mentor innenfor ditt fagområde som vi tenker du skal utvikle deg i. Noen av arbeidsoppgavene vil være:Bygge opp/ sette opp UBW etter en designet løsningTeste løsningen/ prosessenAvholde kundeopplæring/ kursDelta i workshopperDokumentere løsningJobbe med problemstillinger hos kundenØnsket erfaring/ utdanningDu er nyutdannet, eller har jobbet 12 år som itkonsulent, regnskapsmedarbeider, revisor, lønnskonsulent eller tilsvarende. Utdanning på universitet/ høyskolenivå er et krav.Personlige egenskaperDu er ivrig etter å lære enda mer og bli godt kjent med et ERP system. Du syns tabeller og SQL kan være spennende, og du er ikke redd for å prøve noe nytt. Du evner til å lytte og kommunisere tydelig på norsk, så vel som på engelsk. I perioder må du regne med en del reising.Vi tilbyrVarierte og utfordrende arbeidsoppgaverArbeid med et internasjonalt ledende ERP systemMeget godt og utviklende arbeidsmiljøInternasjonale muligheter Sted: Oslo  Tiltredelse: Snarest Kontakter: Annette Waage Braate, , mob: 47 48012597, epost: annette.braate@unit4.com For elektronisk søknadsskjema: [Klikk her] Søknadsfrist: 03.03.2016Stillingsnummer: 031920160210 (Oppgis ved kontakt med NAV)Kilde: NAV ServicesenterArbeidsstedOsloAntall stillinger2Søknadsfrist03.03.2016Siste publiseringsdato03.03.2016Registrert04.02.2016'
@@ -46,15 +45,29 @@ def kjellspyton(x,y):
 
 def main():
     tresholdValue = 60;
-    alldata = dirListing()
+    fileplacement = r"C:\Users\BeateHaram\Documents\Eit\glitterskill\ads\ad-contents" #It-annonser
+    alldata = dirListing(fileplacement)
+      
     #print(len(alldata))
     commonwords = kjellspyton(alldata,tresholdValue)
     counts = np.zeros(tresholdValue)
-    for i in range(0,tresholdValue-1):
-        #print(commonwords[i][1])
+    words = []
+    for i in range(0,tresholdValue):
         counts[i] = commonwords[i][1]
-        #words[i] = commonwords[i][0]
-    print(counts)
-#print(commonwords[i][1])
-#fileread()
+        words.append(commonwords[i][0])
+    #print(counts)
+    #print(len(words))
+    x = np.arange(len(counts))
+    plt.bar(x, counts)
+    plt.xticks(x + 0.5, words, rotation=90)
+    
+    #Prøver å lagre variabel for å åpne den i ipython notebook
+    #outfile = TemporaryFile()
+    #np.save(outfile, x)
+    
+    #dict = {'words': words,'x': x,'counts': counts}
+    #file = open('dump.txt','w')
+    #pickle.dump(dict,file)
+    #file.close()
+    
 if __name__ == '__main__':main()
